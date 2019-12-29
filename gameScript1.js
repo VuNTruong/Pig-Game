@@ -60,7 +60,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             document.querySelector('#current-1').textContent = 0;
 
             // Switch the active player to 1
-            activePlayer = 1;
+            activePlayer = 1; 
         }
     }
 });
@@ -70,7 +70,20 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         // Add the current score to the player's score 
         document.querySelector('#score-0').textContent = Number(document.querySelector('#score-0').textContent) + 
         Number(document.querySelector('#current-0').textContent);
+        
+        // Add the current score to the player's score and store in a variable
+        player1Score += Number(document.querySelector('#current-0').textContent);
 
+        // Check if the game is over or not by checking if either player 1 or 2 reaches 100 or not
+        if (isGameOver()) {
+            console.log('Game is over');
+            
+            // Check to see who is the winner 
+            if (whoHasHigherScore(player1Score, player2Score) == 'Player 1') {
+                console.log('Player 1 wins the game');
+            }
+        }
+        
         // Set the current score back to 0
         document.querySelector('#current-0').textContent = 0;
 
@@ -81,7 +94,20 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         // Add the current score to the player's score 
         document.querySelector('#score-1').textContent = Number(document.querySelector('#score-1').textContent) + 
         Number(document.querySelector('#current-1').textContent);
+        
+        // Add the current score to the player's score and store in a variable
+        player2Score += Number(document.querySelector('#current-1').textContent);
 
+        // Check if the game is over or not by checking if either player 1 or 2 reaches 100 or not
+        if (isGameOver()) {
+            console.log('Game is over');
+            
+            // Check to see who is the winner
+            if (whoHasHigherScore(player1Score, player2Score) == 'Player 2') {
+                console.log('Player 2 wins the game');
+            }
+        }
+        
         // Set the current score back to 0
         document.querySelector('#current-1').textContent = 0;
 
@@ -89,3 +115,21 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         activePlayer = 1;
     }
 });
+
+// Function to check if the game is end or not
+function isGameOver () {
+    if (player1Score >= 100 || player2Score >= 100) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Function to see who has the higher score 
+function whoHasHigherScore (player1Score, player2Score) {
+    if (player1Score > player2Score) {
+        return 'Player 1';
+    } else if (player1Score < player2Score) {
+        return 'Player 2';
+    }
+}
