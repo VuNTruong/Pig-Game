@@ -16,6 +16,20 @@
     text-transform: uppercase;
 }
 
+.winning-score {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 320px;
+    color: #555;
+    font-size: 18px;
+    font-family: 'Lato';
+    text-align: center;
+    padding: 10px;
+    width: 160px;
+    text-transform: uppercase;
+}
+
 .final-score:focus { outline: none; }
 
 #dice-1 { top: 120px; }

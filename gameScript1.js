@@ -18,119 +18,147 @@ document.querySelector('#dice-1').style.display = 'none';
 
 // Set up event for the roll button
 document.querySelector('.btn-roll').addEventListener('click', function() {
-    diceNumber = Math.floor(Math.random() * 6) + 1;
+    // Only let the player roll the dice if the game is not over
+    if (isNotEndGame) {
+        diceNumber = Math.floor(Math.random() * 6) + 1;
 
-    if (activePlayer == 1) {
-        if (diceNumber != 1) {
-            // Set up the value for the dice
-            var diceObject = document.querySelector('#dice-1');
-            diceObject.style.display = 'block';
-            diceObject.src = 'dice-' + diceNumber + '.png'; 
+        if (activePlayer == 1) {
+            if (diceNumber != 1) {
+                // Set up the value for the dice
+                var diceObject = document.querySelector('#dice-1');
+                diceObject.style.display = 'block';
+                diceObject.src = 'dice-' + diceNumber + '.png'; 
 
-            // Increase the number of current score
-            document.querySelector('#current-0').textContent = Number(document.querySelector('#current-0').textContent) + diceNumber;
-        } else if (diceNumber == 1) {
-            // Set up the value for the dice
-            var diceObject = document.querySelector('#dice-1');
-            diceObject.style.display = 'block';
-            diceObject.src = 'dice-' + diceNumber + '.png';
+                // Increase the number of current score
+                document.querySelector('#current-0').textContent = Number(document.querySelector('#current-0').textContent) + diceNumber;
+            } else if (diceNumber == 1) {
+                // Set up the value for the dice
+                var diceObject = document.querySelector('#dice-1');
+                diceObject.style.display = 'block';
+                diceObject.src = 'dice-' + diceNumber + '.png';
 
-            // Bring the number of current score back to 0
-            document.querySelector('#current-0').textContent = 0;
+                // Bring the number of current score back to 0
+                document.querySelector('#current-0').textContent = 0;
 
-            // Switch the active player to 2
-            activePlayer = 2;
-            
-            // Update the UI to show that the current active player is player 2
-            document.querySelector('.player-0-panel').classList.remove('active');
-            document.querySelector('.player-1-panel').classList.add('active');
+                // Switch the active player to 2
+                activePlayer = 2;
+
+                // Update the UI to show that the current active player is player 2
+                document.querySelector('.player-0-panel').classList.remove('active');
+                document.querySelector('.player-1-panel').classList.add('active');
+            }
         }
-    }
-    else if (activePlayer == 2) {
-        if (diceNumber != 1) {
-            // Set up the value for the dice
-            var diceObject = document.querySelector('#dice-1');
-            diceObject.style.display = 'block';
-            diceObject.src = 'dice-' + diceNumber + '.png'; 
+        else if (activePlayer == 2) {
+            if (diceNumber != 1) {
+                // Set up the value for the dice
+                var diceObject = document.querySelector('#dice-1');
+                diceObject.style.display = 'block';
+                diceObject.src = 'dice-' + diceNumber + '.png'; 
 
-            // Increase the number of current score
-            document.querySelector('#current-1').textContent = Number(document.querySelector('#current-1').textContent) + diceNumber;
-        } else if (diceNumber == 1) {
-            // Set up the value for the dice
-            var diceObject = document.querySelector('#dice-1');
-            diceObject.style.display = 'block';
-            diceObject.src = 'dice-' + diceNumber + '.png';
+                // Increase the number of current score
+                document.querySelector('#current-1').textContent = Number(document.querySelector('#current-1').textContent) + diceNumber;
+            } else if (diceNumber == 1) {
+                // Set up the value for the dice
+                var diceObject = document.querySelector('#dice-1');
+                diceObject.style.display = 'block';
+                diceObject.src = 'dice-' + diceNumber + '.png';
 
-            // Bring the number of current score back to 0
-            document.querySelector('#current-1').textContent = 0;
+                // Bring the number of current score back to 0
+                document.querySelector('#current-1').textContent = 0;
 
-            // Switch the active player to 1
-            activePlayer = 1; 
-            
-            // Update the UI to show that the current active player is player 1
-            document.querySelector('.player-1-panel').classList.remove('active');
-            document.querySelector('.player-0-panel').classList.add('active');
+                // Switch the active player to 1
+                activePlayer = 1; 
+
+                // Update the UI to show that the current active player is player 1
+                document.querySelector('.player-1-panel').classList.remove('active');
+                document.querySelector('.player-0-panel').classList.add('active');
+            }
         }
+    } 
+    // If the game is over, tell the player to click new game to begin the new game
+    else {
+        alert('Press new game to begin the new game');
     }
 });
 
 // Set up event for the hold button
 document.querySelector('.btn-hold').addEventListener('click', function() {
-    if (activePlayer == 1) {
-        // Add the current score to the player's score 
-        document.querySelector('#score-0').textContent = Number(document.querySelector('#score-0').textContent) + 
-        Number(document.querySelector('#current-0').textContent);
-        
-        // Add the current score to the player's score and store in a variable
-        player1Score += Number(document.querySelector('#current-0').textContent);
-        
-        // Check if the game is over or not by checking if either player 1 or 2 reaches 100 or not
-        if (isGameOver()) {
-            console.log('Game is over');
-            
-            // Check to see who is the winner 
-            if (whoHasHigherScore(player1Score, player2Score) == 'Player 1') {
-                console.log('Player 1 wins the game');
-            }
-        }
-        
-        // Set the current score back to 0
-        document.querySelector('#current-0').textContent = 0;
+    // Only let the player press the button if the game is not over 
+    if (isNotEndGame) {
+        if (activePlayer == 1) {
+            // Add the current score to the player's score 
+            document.querySelector('#score-0').textContent = Number(document.querySelector('#score-0').textContent) + 
+            Number(document.querySelector('#current-0').textContent);
 
-        // Switch the active player to 2
-        activePlayer = 2;
-        
-        // Update the UI to show that the current active player is player 2
-        document.querySelector('.player-0-panel').classList.remove('active');
-        document.querySelector('.player-1-panel').classList.add('active');
+            // Add the current score to the player's score and store in a variable
+            player1Score += Number(document.querySelector('#current-0').textContent);
+
+            // Check if the game is over or not by checking if either player 1 or 2 reaches 100 or not
+            if (isGameOver()) {
+                console.log('Game is over');
+
+                // Check to see who is the winner 
+                if (whoHasHigherScore(player1Score, player2Score) == 'Player 1') {
+                    // Replace the 'Player 1' with 'Player 1 wins'
+                    document.querySelector('.player-0-panel').classList.remove('active');
+                    document.querySelector('.player-0-panel').classList.add('winner');
+
+                    document.querySelector('#name-0').textContent = 'Player 1 wins';
+                    
+                    // Set the is not end game to false, so that the game is over 
+                    isNotEndGame = false;
+                }
+            }
+
+            // Set the current score back to 0
+            document.querySelector('#current-0').textContent = 0;
+
+            // Switch the active player to 2
+            activePlayer = 2;
+
+            // Update the UI to show that the current active player is player 2
+            document.querySelector('.player-0-panel').classList.remove('active');
+            document.querySelector('.player-1-panel').classList.add('active');
+        }
+        else if (activePlayer == 2) {
+            // Add the current score to the player's score 
+            document.querySelector('#score-1').textContent = Number(document.querySelector('#score-1').textContent) + 
+            Number(document.querySelector('#current-1').textContent);
+
+            // Add the current score to the player's score and store in a variable
+            player2Score += Number(document.querySelector('#current-1').textContent);
+
+            // Check if the game is over or not by checking if either player 1 or 2 reaches 100 or not
+            if (isGameOver()) {
+                console.log('Game is over');
+
+                // Check to see who is the winner
+                if (whoHasHigherScore(player1Score, player2Score) == 'Player 2') {
+                    // Replace the 'Player 2' with 'Player 2 wins'
+                    document.querySelector('.player-1-panel').classList.remove('active');
+                    document.querySelector('.player-1-panel').classList.add('winner');
+                    
+                    document.querySelector('#name-1').textContent = 'Player 2 wins';
+
+                    // Set the is not end game to false, so that the game is over
+                    isNotEndGame = false;
+                }
+            }
+
+            // Set the current score back to 0
+            document.querySelector('#current-1').textContent = 0;
+
+            // Switch the active player to 1
+            activePlayer = 1;
+
+            // Update the UI to show that the current active player is player 1
+            document.querySelector('.player-1-panel').classList.remove('active');
+            document.querySelector('.player-0-panel').classList.add('active');
+        }
     }
-    else if (activePlayer == 2) {
-        // Add the current score to the player's score 
-        document.querySelector('#score-1').textContent = Number(document.querySelector('#score-1').textContent) + 
-        Number(document.querySelector('#current-1').textContent);
-        
-        // Add the current score to the player's score and store in a variable
-        player2Score += Number(document.querySelector('#current-1').textContent);
-
-        // Check if the game is over or not by checking if either player 1 or 2 reaches 100 or not
-        if (isGameOver()) {
-            console.log('Game is over');
-            
-            // Check to see who is the winner
-            if (whoHasHigherScore(player1Score, player2Score) == 'Player 2') {
-                console.log('Player 2 wins the game');
-            }
-        }
-        
-        // Set the current score back to 0
-        document.querySelector('#current-1').textContent = 0;
-
-        // Switch the active player to 1
-        activePlayer = 1;
-        
-        // Update the UI to show that the current active player is player 1
-        document.querySelector('.player-1-panel').classList.remove('active');
-        document.querySelector('.player-0-panel').classList.add('active');
+    // If the game is over, tell the player to press start to start the new game
+    else {
+        alert('Press new game to begin a new game');
     }
 });
 
@@ -174,4 +202,7 @@ function initGame () {
     
     // Set the initial entire score of player 2 to 0 for the variable
     player2Score = 0;
+    
+    // Set the isNotEndGame back to true 
+    isNotEndGame = true;
 }
